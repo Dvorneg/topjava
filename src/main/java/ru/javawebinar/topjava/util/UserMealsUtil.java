@@ -32,15 +32,18 @@ public class UserMealsUtil {
             -  поле `UserMealWithExcess.excess` должно показывать,
     превышает ли сумма калорий за весь день значение `caloriesPerDay`*/
     public static List<UserMealWithExcess> filteredByCycles(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-        // TODO return filtered list with excess. Implement by cycles
         List<UserMealWithExcess> resault = new ArrayList();
         Map<LocalDate, Integer> dayCalories = new HashMap<>();
         for (UserMeal meal : meals) {
-            dayCalories.put(meal.getDateTime().toLocalDate(), meal.getCalories());
+            if (dayCalories.get(meal.getDateTime().toLocalDate())==null)
+                dayCalories.put(meal.getDateTime().toLocalDate(), meal.getCalories());
+            else
+                dayCalories.put(meal.getDateTime().toLocalDate(), dayCalories.get(meal.getDateTime().toLocalDate())+ meal.getCalories());
+
         }
         for (UserMeal meal : meals) {
             if ( TimeUtil.isBetweenHalfOpen(meal.getDateTime().toLocalTime(),startTime, endTime ))  {
-                resault.add(new UserMealWithExcess(meal.getDateTime(), meal.getDescription(), meal.getCalories(), meal.getCalories() < caloriesPerDay));
+                resault.add(new UserMealWithExcess(meal.getDateTime(), meal.getDescription(), meal.getCalories(), dayCalories.get(meal.getDateTime().toLocalDate()) > caloriesPerDay));
             }
         }
         return resault;
