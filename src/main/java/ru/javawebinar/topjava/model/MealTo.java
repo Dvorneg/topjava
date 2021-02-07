@@ -27,4 +27,7 @@ public class MealTo {
                 ", excess=" + excess +
                 '}';
     }
+    public String getDescription() {
+        return description;
+    }
 }
