@@ -17,14 +17,12 @@ ${textB}
 
 <table border="1">
     <h2>
-        <tr><th>Заголовок 1</th><th>Заголовок 2</th></tr>
+        <tr><th>Дата</th><th>Описание</th></tr>
     </h2>
 
     <c:forEach items="${meals}" var="meal">
         <c:out value="${meal.getDescription()}"/>
-        <tr><td>  </td><td>Ячейка 3</td></tr>
-
-        <tr><td>  </td><td>Ячейка 4</td></tr>
+        <tr><td>${meal.getDate()}</td><td>${meal.getDescription()}</td></tr>
     </c:forEach>
 
 </table>

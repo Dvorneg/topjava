@@ -45,9 +45,9 @@ public class MealsUtil {
         return new MealTo(meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
     }
 
-    public static List<MealTo> friendsAsArray(){
-        MealTo[] a = { new MealTo(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500,true),
-                new MealTo(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000,false) };
-        return Arrays.asList(a);
+    public static List<Meal> friendsAsArray(){
+        Meal[] meals = { new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500),
+                new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000) };
+        return Arrays.asList(meals);
     }
 }

@@ -30,8 +30,8 @@ public class MealServlet extends HttpServlet {
         request.setAttribute("textA", varTextA);
         String varTextB = "It JSP.";
         request.setAttribute("textB", varTextB);
-        List<MealTo> mealTo = MealsUtil.friendsAsArray();
-        request.setAttribute("meals", mealTo);
+        List<Meal> meals = MealsUtil.friendsAsArray();
+        request.setAttribute("meals", meals);
        // RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
        // dispatcher.forward(request, response);
 
