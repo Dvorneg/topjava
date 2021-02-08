@@ -10,19 +10,24 @@
 <hr>
 <h2>Meals</h2>
 
-${textA}
-${textB}
+<%--@elvariable id="meals" type="java.util.Arrays"--%>
 <c:set var="meals" value="${meals}" />
+<jsp:useBean id="сaloriesNorm" scope="request" type="java.lang.Integer"/>
+<c:set var="сaloriesNorm" value="${сaloriesNorm}" />
 
-
-<table border="1">
+<table border = "1px" >
     <h2>
-        <tr><th>Дата</th><th>Описание</th></tr>
+        <tr><th>Дата</th><th>Описание</th><th>Калории</th><th>Excess</th></tr>
     </h2>
 
     <c:forEach items="${meals}" var="meal">
-        <c:out value="${meal.getDescription()}"/>
-        <tr><td>${meal.getDate()}</td><td>${meal.getDescription()}</td></tr>
+        <tr style="color:${сaloriesNorm> meal.getCalories()? "#dc143c" : "#228b22"}">
+<%--            <td>${meal.getDateTime()}</td>--%>
+            <td>${meal.getFormattedDateTime()}</td>
+            <td>${meal.getDescription()}</td>
+            <td>${meal.getCalories()}</td>
+            <td><c:out value="${сaloriesNorm> meal.getCalories()? 'yes' : 'no'}" /></td>
+        </tr>
     </c:forEach>
 
 </table>

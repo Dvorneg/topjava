@@ -2,10 +2,8 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.MealTo;
 import ru.javawebinar.topjava.util.MealsUtil;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,11 +23,12 @@ public class MealServlet extends HttpServlet {
 //        request.getRequestDispatcher("/users.jsp").forward(request, response);
 
         response.setContentType("text/html");
-
-        String varTextA = "Hello World!";
+        Integer i = MealsUtil.returnCaloriesNorm();
+        request.setAttribute("сaloriesNorm",i);
+/*        String varTextA = "Hello World!";
         request.setAttribute("textA", varTextA);
         String varTextB = "It JSP.";
-        request.setAttribute("textB", varTextB);
+        request.setAttribute("textB", varTextB);*/
         List<Meal> meals = MealsUtil.friendsAsArray();
         request.setAttribute("meals", meals);
        // RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
