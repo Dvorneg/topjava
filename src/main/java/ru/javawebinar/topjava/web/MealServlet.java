@@ -1,7 +1,7 @@
 package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
-import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.MealTo;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.ServletException;
@@ -29,7 +29,7 @@ public class MealServlet extends HttpServlet {
         request.setAttribute("textA", varTextA);
         String varTextB = "It JSP.";
         request.setAttribute("textB", varTextB);*/
-        List<Meal> meals = MealsUtil.friendsAsArray();
+        List<MealTo> meals = MealsUtil.friendsAsArray();
         request.setAttribute("meals", meals);
        // RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
        // dispatcher.forward(request, response);

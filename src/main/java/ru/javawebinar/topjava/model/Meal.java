@@ -3,7 +3,6 @@ package ru.javawebinar.topjava.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 public class Meal {
     private final LocalDateTime dateTime;
@@ -38,8 +37,8 @@ public class Meal {
         return dateTime.toLocalTime();
     }
 
-    public String getFormattedDateTime() {
+ /*   public String getFormattedDateTime() {
         return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(this.dateTime);
         //return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(this.dateTime);
-    }
+    }*/
 }

@@ -21,12 +21,12 @@
     </h2>
 
     <c:forEach items="${meals}" var="meal">
-        <tr style="color:${сaloriesNorm> meal.getCalories()? "#dc143c" : "#228b22"}">
+        <tr style="color:${ meal.isExcess()? "#dc143c" : "#228b22"}">
 <%--            <td>${meal.getDateTime()}</td>--%>
             <td>${meal.getFormattedDateTime()}</td>
             <td>${meal.getDescription()}</td>
             <td>${meal.getCalories()}</td>
-            <td><c:out value="${сaloriesNorm> meal.getCalories()? 'yes' : 'no'}" /></td>
+     <%--       <td><c:out value="${сaloriesNorm> meal.getCalories()? 'yes' : 'no'}" /></td>--%>
         </tr>
     </c:forEach>
 
@@ -40,7 +40,7 @@
 </c:forEach>--%>
 
 <h2>
-    END 2
+    END
 </h2>
 </body>
 </html>
