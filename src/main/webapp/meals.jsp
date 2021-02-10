@@ -17,7 +17,7 @@
 
 <table border = "1px" >
     <h2>
-        <tr><th>Дата</th><th>Описание</th><th>Калории</th><th>Excess</th></tr>
+        <tr><th>Дата</th><th>Описание</th><th>Калории</th><th>Upd</th><th>Del</th></tr>
     </h2>
 
     <c:forEach items="${meals}" var="meal">
@@ -26,7 +26,9 @@
             <td>${meal.getFormattedDateTime()}</td>
             <td>${meal.getDescription()}</td>
             <td>${meal.getCalories()}</td>
-     <%--       <td><c:out value="${сaloriesNorm> meal.getCalories()? 'yes' : 'no'}" /></td>--%>
+            <td><a href="meals?action=edit&mealId=<c:out value="${meal.getId()}"/>">Update</a></td>
+            <td><a href="UserController?action=delete&userId=<c:out value="${user.userid}"/>">Delete</a></td>
+     <%--        <td><c:out value="${сaloriesNorm> meal.getCalories()? 'yes' : 'no'}" /></td>--%>
         </tr>
     </c:forEach>
 
@@ -40,6 +42,7 @@
 </c:forEach>--%>
 
 <h2>
+<%--    <p><a href="UserController?action=insert">Add User</a></p>--%>
     END
 </h2>
 </body>
