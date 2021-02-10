@@ -2,6 +2,8 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import ru.javawebinar.topjava.model.MealTo;
+import ru.javawebinar.topjava.service.MealToServiceHard;
+import ru.javawebinar.topjava.service.MealToServiceImpl;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.ServletException;
@@ -9,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -25,23 +30,34 @@ public class MealServlet extends HttpServlet {
         String forward = "";
         String action = request.getParameter("action");
 
+
         if (action.equalsIgnoreCase("edit")) {
             forward = INSERT_OR_EDIT;
             int mealId = Integer.parseInt(request.getParameter("mealId"));
-            User user = dao.getUserById(userId);
+            MealToServiceImpl service = new MealToServiceHard();
+            User user = service.getUserById(userId);
             request.setAttribute("user", user);
-            System.out.print("!!!!!!! " + action + "!!!!!!!!!!!+mealId");
+            System.out.print("!!!!!!! " + action + "!!!!!!!!!!!"+mealId);
+
 
 //        request.getRequestDispatcher("/users.jsp").forward(request, response);
 
             response.setContentType("text/html");
-            Integer i = MealsUtil.returnCaloriesNorm();
-            request.setAttribute("сaloriesNorm", i);
+            //Integer i = service.returnCaloriesNorm();
+          //  request.setAttribute("сaloriesNorm", service.returnCaloriesNorm());
 /*        String varTextA = "Hello World!";
         request.setAttribute("textA", varTextA);
         String varTextB = "It JSP.";
         request.setAttribute("textB", varTextB);*/
-            List<MealTo> meals = MealsUtil.friendsAsArray();
+
+
+            //List<MealTo> meals = MealsUtil.friendsAsArray(); //Заменяем ниже
+            List<MealTo> meals = new ArrayList<>();
+
+            meals.addAll(MealsUtil.filteredByStreams(service.loadMeals(), LocalTime.MIN, LocalTime.MAX, service.returnCaloriesNorm()));
+
+
+
             request.setAttribute("meals", meals);
             // RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
             // dispatcher.forward(request, response);

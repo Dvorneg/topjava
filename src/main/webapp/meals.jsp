@@ -12,8 +12,6 @@
 
 <%--@elvariable id="meals" type="java.util.Arrays"--%>
 <c:set var="meals" value="${meals}" />
-<jsp:useBean id="сaloriesNorm" scope="request" type="java.lang.Integer"/>
-<c:set var="сaloriesNorm" value="${сaloriesNorm}" />
 
 <table border = "1px" >
     <h2>
