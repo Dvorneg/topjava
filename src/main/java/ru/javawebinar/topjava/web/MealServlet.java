@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealTo;
 import ru.javawebinar.topjava.service.MealToServiceHard;
 import ru.javawebinar.topjava.service.MealToServiceImpl;
@@ -20,8 +21,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class MealServlet extends HttpServlet {
     private static final Logger log = getLogger(MealServlet.class);
-    private static final String INSERT_OR_EDIT = "/mealsEdit.jsp";
-    ;
+    private static final String INSERT_OR_EDIT = "/mealEdit.jsp";
+    private static final String ALL_MEALS = "/meals.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,42 +30,47 @@ public class MealServlet extends HttpServlet {
 
         String forward = "";
         String action = request.getParameter("action");
-
-
+        if (action==null)
+            action="start";
+        MealToServiceImpl service = new MealToServiceHard();
+        // System.out.printf("action"+action.toString() );
+        log.debug("gперед ошибкой - to meals");
         if (action.equalsIgnoreCase("edit")) {
+            log.debug("edit to meals");
             forward = INSERT_OR_EDIT;
-            int mealId = Integer.parseInt(request.getParameter("mealId"));
-            MealToServiceImpl service = new MealToServiceHard();
-            User user = service.getUserById(userId);
-            request.setAttribute("user", user);
-            System.out.print("!!!!!!! " + action + "!!!!!!!!!!!"+mealId);
+            int mealId =Integer.valueOf( request.getParameter("mealId"));
+            Meal meal = service.getMealsById(mealId);
 
+            request.setAttribute("meal", meal);
+            System.out.print("!!!!!!! " + action + "!!!!!!!!!!!" + mealId);
+        }
+        else {
+            forward = ALL_MEALS;
+        }
 
 //        request.getRequestDispatcher("/users.jsp").forward(request, response);
 
-            response.setContentType("text/html");
-            //Integer i = service.returnCaloriesNorm();
-          //  request.setAttribute("сaloriesNorm", service.returnCaloriesNorm());
+        response.setContentType("text/html");
+        //Integer i = service.returnCaloriesNorm();
+        //  request.setAttribute("сaloriesNorm", service.returnCaloriesNorm());
 /*        String varTextA = "Hello World!";
         request.setAttribute("textA", varTextA);
         String varTextB = "It JSP.";
         request.setAttribute("textB", varTextB);*/
 
+        //List<MealTo> meals = MealsUtil.friendsAsArray(); //Заменяем ниже
+        List<MealTo> meals = new ArrayList<>();
 
-            //List<MealTo> meals = MealsUtil.friendsAsArray(); //Заменяем ниже
-            List<MealTo> meals = new ArrayList<>();
+        meals.addAll(MealsUtil.filteredByStreams(service.loadMeals(), LocalTime.MIN, LocalTime.MAX, service.returnCaloriesNorm()));
 
-            meals.addAll(MealsUtil.filteredByStreams(service.loadMeals(), LocalTime.MIN, LocalTime.MAX, service.returnCaloriesNorm()));
+        request.setAttribute("meals", meals);
+        // RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+        // dispatcher.forward(request, response);
+        log.debug("bihind forward");
+        request.getRequestDispatcher(forward).forward(request, response);
+        //request.getRequestDispatcher("/meals.jsp").forward(request, response);
+        //response.sendRedirect("meals.jsp",response);
 
-
-
-            request.setAttribute("meals", meals);
-            // RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
-            // dispatcher.forward(request, response);
-
-            request.getRequestDispatcher("/meals.jsp").forward(request, response);
-            //response.sendRedirect("meals.jsp",response);
-        }
     }
 }
 

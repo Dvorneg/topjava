@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class MealTo {
-    private final LocalDateTime dateTime;
+    private LocalDateTime dateTime;
 
-    private final int id;
+    private int id;
 
     private final String description;
 
@@ -19,7 +19,7 @@ public class MealTo {
         this.description = description;
         this.calories = calories;
         this.excess = excess;
-        this.id=id;
+        this.id = id;
     }
 
     @Override
