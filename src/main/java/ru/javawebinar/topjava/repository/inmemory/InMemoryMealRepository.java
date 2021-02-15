@@ -40,10 +40,10 @@ public class InMemoryMealRepository implements MealRepository {
 
     @Override
     public Meal get(int id) {
-        if (SecurityUtil.authUserId()==id )
-            return repository.get(id);
+        //if (SecurityUtil.authUserId()==id )
+        return repository.get(id);
         //DefaultListSelectionModel
-        return null;
+       // return null;
     }
 
     @Override
