@@ -4,7 +4,10 @@ import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.web.SecurityUtil;
 
+import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,12 +40,22 @@ public class InMemoryMealRepository implements MealRepository {
 
     @Override
     public Meal get(int id) {
-        return repository.get(id);
+        if (SecurityUtil.authUserId()==id )
+            return repository.get(id);
+        //DefaultListSelectionModel
+        return null;
     }
 
     @Override
     public Collection<Meal> getAll() {
-        return repository.values();
+        Collection<Meal> collection= new ArrayList<Meal>();
+        for (Meal value : repository.values()) {
+            if (SecurityUtil.authUserId()== value.getUserID())
+                collection.add(value);
+//todo сортировать по дате.
+        }
+        return collection;
+
     }
 }
 

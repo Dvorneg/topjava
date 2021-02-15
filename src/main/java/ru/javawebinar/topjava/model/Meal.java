@@ -13,16 +13,20 @@ public class Meal extends AbstractBaseEntity{
 
     private final int calories;
 
-    public Meal(LocalDateTime dateTime, String description, int calories) {
-        this(null, dateTime, description, calories);
+    private final Integer userID;
+
+
+    public Meal(LocalDateTime dateTime, String description, int calories, Integer userID) {
+        this(null, dateTime, description, calories, userID);
     }
 
-    public Meal(Integer id, LocalDateTime dateTime, String description, int calories) {
+    public Meal(Integer id, LocalDateTime dateTime, String description, int calories, Integer userID) {
         super(id); //после наследования от базового entity надо добавить super
         this.id = id;
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
+        this.userID = userID;
     }
 
     public Integer getId() {
@@ -51,6 +55,10 @@ public class Meal extends AbstractBaseEntity{
 
     public LocalTime getTime() {
         return dateTime.toLocalTime();
+    }
+
+    public Integer getUserID() {
+        return userID;
     }
 
     public boolean isNew() {
