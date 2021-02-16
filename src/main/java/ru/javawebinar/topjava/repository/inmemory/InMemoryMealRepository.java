@@ -9,7 +9,6 @@ import ru.javawebinar.topjava.web.SecurityUtil;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -42,14 +41,14 @@ public class InMemoryMealRepository implements MealRepository {
     @Override
     public Meal get(int id) {
         //if (SecurityUtil.authUserId()==id )
-            return repository.get(id);
+        return repository.get(id);
         //DefaultListSelectionModel
        // return null;
     }
 
     @Override
-    public ArrayList<Meal> getAll() {
-        ArrayList<Meal> collection= new ArrayList<Meal>();
+    public Collection<Meal> getAll() {
+        Collection<Meal> collection= new ArrayList<Meal>();
         for (Meal value : repository.values()) {
             if (SecurityUtil.authUserId()== value.getUserID())
                 collection.add(value);

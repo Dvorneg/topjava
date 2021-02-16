@@ -21,6 +21,7 @@ public class Meal extends AbstractBaseEntity{
 
     public Meal(Integer id, LocalDateTime dateTime, String description, int calories, Integer userID) {
         super(id); //после наследования от базового entity надо добавить super
+       // this.id = id;
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
