@@ -25,6 +25,7 @@ public class MealTo {
     @Override
     public String toString() {
         return "MealTo{" +
+                "id=" + id +
                 "dateTime=" + dateTime +
                 ", description='" + description + '\'' +
                 ", calories=" + calories +

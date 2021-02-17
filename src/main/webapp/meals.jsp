@@ -10,7 +10,7 @@
 <hr>
 <h2>Meals</h2>
 
-<c:set var="meals" value="${meals}" />
+<%--<c:set var="meal" value="${meals}" />--%>
 <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealTo"/>
 <table border = "1px" >
     <h2>
@@ -24,7 +24,7 @@
             <td>${meal.getDescription()}</td>
             <td>${meal.getCalories()}</td>
 
-            <td><a href="meals?action=edit&mealId=<c:out value="${meal.getId}"/>">Update</a></td>
+            <td><a href="meals?action=edit&mealId=<c:out value="${meals.getId}"/>">Update</a></td>
 
      <%--        <td><c:out value="${сaloriesNorm> meal.getCalories()? 'yes' : 'no'}" /></td>--%>
         </tr>

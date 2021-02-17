@@ -3,8 +3,9 @@ package ru.javawebinar.topjava.web;
 import org.slf4j.Logger;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealTo;
-import ru.javawebinar.topjava.service.MealToServiceHard;
-import ru.javawebinar.topjava.service.MealToServiceImpl;
+import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.service.MealToServiceHardDEL;
+import ru.javawebinar.topjava.repository.MealToServiceImpl;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.ServletException;
@@ -14,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -32,14 +32,14 @@ public class MealServlet extends HttpServlet {
         String action = request.getParameter("action");
         if (action==null)
             action="start";
-        MealToServiceImpl service = new MealToServiceHard();
+        MealRepository repository = new MealRepository();
         // System.out.printf("action"+action.toString() );
 
         if (action.equalsIgnoreCase("edit")) {
             log.debug("edit to meals");
             forward = INSERT_OR_EDIT;
             int mealId =Integer.valueOf( request.getParameter("mealId"));
-            Meal meal = service.getMealsById(mealId);
+            Meal meal = repository.getMealsById(mealId);
             log.debug("meal:"+meal);
             request.setAttribute("meal", meal);
             System.out.print("!!!!!!! " + action + "!!!!!!!!!!!" + mealId);
@@ -60,11 +60,11 @@ public class MealServlet extends HttpServlet {
 
         //List<MealTo> meals = MealsUtil.friendsAsArray(); //Заменяем ниже
         List<MealTo> meals = new ArrayList<>();
-        meals.addAll(MealsUtil.filteredByStreams(service.loadMeals(), LocalTime.MIN, LocalTime.MAX, service.returnCaloriesNorm()));
+        meals.addAll(MealsUtil.filteredByStreams( repository.getAll(), LocalTime.MIN, LocalTime.MAX, MealsUtil.returnCaloriesNorm()));
         request.setAttribute("meals", meals);
         // RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         // dispatcher.forward(request, response);
-        log.debug("bihind forward");
+        log.debug("meals:"+meals);
         request.getRequestDispatcher(forward).forward(request, response);
         //request.getRequestDispatcher("/meals.jsp").forward(request, response);
         //response.sendRedirect("meals.jsp",response);
