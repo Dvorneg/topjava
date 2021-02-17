@@ -34,13 +34,13 @@ public class MealServlet extends HttpServlet {
             action="start";
         MealToServiceImpl service = new MealToServiceHard();
         // System.out.printf("action"+action.toString() );
-        log.debug("gперед ошибкой - to meals");
+
         if (action.equalsIgnoreCase("edit")) {
             log.debug("edit to meals");
             forward = INSERT_OR_EDIT;
             int mealId =Integer.valueOf( request.getParameter("mealId"));
             Meal meal = service.getMealsById(mealId);
-
+            log.debug("meal:"+meal);
             request.setAttribute("meal", meal);
             System.out.print("!!!!!!! " + action + "!!!!!!!!!!!" + mealId);
         }

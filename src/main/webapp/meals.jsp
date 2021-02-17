@@ -10,8 +10,8 @@
 <hr>
 <h2>Meals</h2>
 
-<%--@elvariable id="meals" type="java.util.Arrays"--%>
 <c:set var="meals" value="${meals}" />
+<jsp:useBean id="meals" scope="request" type="java.util.ArrayList<ru.javawebinar.topjava.model.MealTo>"/>
 
 <table border = "1px" >
     <h2>
@@ -24,14 +24,16 @@
             <td>${meal.getFormattedDateTime()}</td>
             <td>${meal.getDescription()}</td>
             <td>${meal.getCalories()}</td>
-            <td><a href="meals?action=edit&mealId=<c:out value="${meal.getId()}"/>">Update</a></td>
-            <td><a href="UserController?action=delete&userId=<c:out value="${user.userid}"/>">Delete</a></td>
+
+            <td><a href="meals?action=edit&mealId=<c:out value="${meal.getId}"/>">Update</a></td>
+
      <%--        <td><c:out value="${сaloriesNorm> meal.getCalories()? 'yes' : 'no'}" /></td>--%>
         </tr>
     </c:forEach>
 
 </table>
 
+<td><a href="meals?action=edit&mealId=<c:out value="${meal.getId()}"/>">Add</a></td>
 
 <%--<c:forEach items="${friends2}" var="friend">
     <h3>
