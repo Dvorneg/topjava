@@ -1,9 +1,8 @@
 package ru.javawebinar.topjava.repository;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
+
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.MealsUtil;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +39,6 @@ public class MealRepository {
     }
 
         public List<Meal> getAll () {
-            return (new ArrayList<Meal>( repository.values()));
+            return (new ArrayList<>( repository.values()));
         }
     }
