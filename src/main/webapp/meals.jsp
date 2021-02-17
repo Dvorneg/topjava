@@ -11,8 +11,7 @@
 <h2>Meals</h2>
 
 <c:set var="meals" value="${meals}" />
-<jsp:useBean id="meals" scope="request" type="java.util.ArrayList<ru.javawebinar.topjava.model.MealTo>"/>
-
+<jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealTo"/>
 <table border = "1px" >
     <h2>
         <tr><th>Дата</th><th>Описание</th><th>Калории</th><th>Upd</th><th>Del</th></tr>

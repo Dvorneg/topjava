@@ -60,9 +60,7 @@ public class MealServlet extends HttpServlet {
 
         //List<MealTo> meals = MealsUtil.friendsAsArray(); //Заменяем ниже
         List<MealTo> meals = new ArrayList<>();
-
         meals.addAll(MealsUtil.filteredByStreams(service.loadMeals(), LocalTime.MIN, LocalTime.MAX, service.returnCaloriesNorm()));
-
         request.setAttribute("meals", meals);
         // RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         // dispatcher.forward(request, response);
