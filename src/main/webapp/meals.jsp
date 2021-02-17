@@ -10,29 +10,28 @@
 <hr>
 <h2>Meals</h2>
 
-<%--<c:set var="meal" value="${meals}" />--%>
-<jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealTo"/>
+
 <table border = "1px" >
     <h2>
         <tr><th>Дата</th><th>Описание</th><th>Калории</th><th>Upd</th><th>Del</th></tr>
     </h2>
 
+
     <c:forEach items="${meals}" var="meal">
-        <tr style="color:${ meal.isExcess()? "#dc143c" : "#228b22"}">
-<%--            <td>${meal.getDateTime()}</td>--%>
-            <td>${meal.getFormattedDateTime()}</td>
-            <td>${meal.getDescription()}</td>
-            <td>${meal.getCalories()}</td>
-
-            <td><a href="meals?action=edit&mealId=<c:out value="${meals.getId}"/>">Update</a></td>
-
+        <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealTo"/>
+        <tr style="color:${ meal.excess? "#dc143c" : "#228b22"}">
+            <td>${meal.formattedDateTime}</td>
+            <td>${meal.description}</td>
+            <td>${meal.calories}</td>
+            <td><a href="meals?action=edit&mealId=<c:out value="${meal.getId()}"/>">Update</a></td>
+            <td><a href="meals?action=del&mealId=<c:out value="${meal.getId()}"/>">Del</a></td>
      <%--        <td><c:out value="${сaloriesNorm> meal.getCalories()? 'yes' : 'no'}" /></td>--%>
         </tr>
     </c:forEach>
 
 </table>
 
-<td><a href="meals?action=edit&mealId=<c:out value="${meal.getId()}"/>">Add</a></td>
+<%--<td><a href="meals?action=edit&mealId=<c:out value="${meal.getId()}"/>">Add</a></td>--%>
 
 <%--<c:forEach items="${friends2}" var="friend">
     <h3>
@@ -41,7 +40,7 @@
 </c:forEach>--%>
 
 <h2>
-<%--    <p><a href="UserController?action=insert">Add User</a></p>--%>
+   <p><a href="UserController?action=insert">Add User</a></p>
     END
 </h2>
 </body>
