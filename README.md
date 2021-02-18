@@ -1,5 +1,7 @@
 УРОК1
 https://github.com/JavaWebinar/topjava/blob/doc/doc/lesson01.md
+по этому:
+https://danielniko.wordpress.com/2012/04/17/simple-crud-using-jsp-servlet-and-mysql/
 
 Java Enterprise Online Project 
 ===============================

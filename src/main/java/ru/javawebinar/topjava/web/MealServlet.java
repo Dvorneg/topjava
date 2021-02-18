@@ -4,15 +4,17 @@ import org.slf4j.Logger;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealTo;
 import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.service.MealToServiceHardDEL;
-import ru.javawebinar.topjava.repository.MealToServiceImpl;
 import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.util.TimeUtil;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,14 +51,7 @@ public class MealServlet extends HttpServlet {
         }
 
 //        request.getRequestDispatcher("/users.jsp").forward(request, response);
-
         response.setContentType("text/html");
-        //Integer i = service.returnCaloriesNorm();
-        //  request.setAttribute("сaloriesNorm", service.returnCaloriesNorm());
-/*        String varTextA = "Hello World!";
-        request.setAttribute("textA", varTextA);
-        String varTextB = "It JSP.";
-        request.setAttribute("textB", varTextB);*/
 
         //List<MealTo> meals = MealsUtil.friendsAsArray(); //Заменяем ниже
         List<MealTo> meals = new ArrayList<>();
@@ -68,32 +63,45 @@ public class MealServlet extends HttpServlet {
         request.getRequestDispatcher(forward).forward(request, response);
         //request.getRequestDispatcher("/meals.jsp").forward(request, response);
         //response.sendRedirect("meals.jsp",response);
-
     }
-}
 
-   /* protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String forward="";
-        String action = request.getParameter("action");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
 
-        if (action.equalsIgnoreCase("delete")){
-            int userId = Integer.parseInt(request.getParameter("userId"));
-            dao.deleteUser(userId);
-            forward = LIST_USER;
-            request.setAttribute("users", dao.getAllUsers());
-        } else if (action.equalsIgnoreCase("edit")){
-            forward = INSERT_OR_EDIT;
-            int userId = Integer.parseInt(request.getParameter("userId"));
-            User user = dao.getUserById(userId);
-            request.setAttribute("user", user);
-        } else if (action.equalsIgnoreCase("listUser")){
-            forward = LIST_USER;
-            request.setAttribute("users", dao.getAllUsers());
-        } else {
-            forward = INSERT_OR_EDIT;
+        System.out.println("DO post!");
+       //meal.setFirstName(request.getParameter("firstName"));
+       // meal.setLastName(request.getParameter("lastName"));
+        LocalDateTime dob = null;
+        try {
+            //dob = new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("dob"));
+            dob =  LocalDateTime.parse(request.getParameter("dateTime"));
+            if (dob==null)
+                System.out.println("Error ! Data NULL!!!");
+            //meal.setDob(dob);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+      //  meal.setEmail(request.getParameter("email"));
+        String userid = request.getParameter("mealId");
+        if (userid==null)
+            System.out.println("Error ! user id  NULL!!!");
+        MealRepository repository = new MealRepository();
+
+        Meal meal = new Meal(Integer.parseInt(userid),dob, request.getParameter("description"),Integer.parseInt(request.getParameter("calories")));
+
+        if(userid == null || userid.isEmpty())
+        {
+            repository.save(meal);
+        }
+        else
+        {
+           // meal.setUserid(Integer.parseInt(userid));
+            repository.update(meal);
         }
 
-        RequestDispatcher view = request.getRequestDispatcher(forward);
+        RequestDispatcher view = request.getRequestDispatcher(INSERT_OR_EDIT);
+        request.setAttribute("users", repository.getAll());
         view.forward(request, response);
-    }*/
+    }
 
+}

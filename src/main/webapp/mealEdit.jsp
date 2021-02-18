@@ -9,27 +9,26 @@
 <h3><a href="index.html">Home</a></h3>
 <hr>
 <h2>Meal</h2>
-<c:set var="meal" value="${meal}" />
+<%--<c:set var="meal" value="${meal}" />--%>
 <%--<script>
     $(function () {
-        $('input[name=dob]').datepicker();
+        $('input[name=DateTime]').datepicker();
     });
 </script>--%>
-
-
-<form method="POST" action='meal' name="frmAddUser">
-    meal ID : <input type="text" readonly="readonly" name="mealid"
-                     value="<c:out value="${meal.getId()}" />"/> <br/>
-    Date/Time : <input type="text" name="DateTime"
-                     value="<%--@elvariable id="meal" type=""--%>
-        <c:out value="${meal.getDateTime()}" />"/> <br/>
-    Description : <input type="text" name="Description"
-                     value="<c:out value="${meal.getDescription()}" />"/> <br/>
-    <%--    DOB : <input type="text" name="dob"
-            value="<fmt:formatDate pattern="MM/dd/yyyy" value="${user.dob}" />"/> <br/>
-            Email : <input type="text" name="email"
-            value="<c:out value="${user.email}" />"/> <br/>--%>
-    <input type="submit" value="Submit"/>
+<c:set var="meal" value="${meal}" />
+<jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal"/>
+<form method="POST" action='meals' name="frmAddUser">
+    meal ID :
+    <input type="text" readonly="readonly" name="mealId"
+    value="<c:out value="${meal.id}" />"/> <br/>
+    <%--type="datetime-local Этот тип всплывающего календаря--%>
+    <input type="datetime-local" value="${meal.dateTime}" name="dateTime" required/><br/>
+    Description :
+    <input type="text" name="Description"
+    value="<c:out value="${meal.description}" />"/> <br/>
+ <%--  // <input type="submit" value="Submit"/>--%>
+    <button type="submit">Save</button>
+    <button onclick="window.history.back()" type="button">Cancel</button>
 </form>
 </body>
 </html>

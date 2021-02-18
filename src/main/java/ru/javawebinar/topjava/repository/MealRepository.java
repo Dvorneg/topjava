@@ -22,13 +22,21 @@ public class MealRepository {
         //todo stream 17/02
     }
 
-    public Meal save(Meal meal) {
-        System.out.println(counter.get());
+    public Meal update(Meal meal) {
+        //todo it is save ? 18/02
+        //System.out.println(counter.get());
         return repository.put(counter.getAndIncrement(),meal);
     }
 
-/*    public boolean delete(int id) {
-    }*/
+    public Meal save(Meal meal) {
+       // System.out.println(counter.get());
+        return repository.put(counter.getAndIncrement(),meal);
+    }
+
+    public boolean delete(int id) {
+        repository.remove(id);
+        return true;
+    }
 
     public Meal getMealsById ( int id){
         for (int i = 0; i <repository.size() ; i++) {
