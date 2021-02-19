@@ -5,7 +5,6 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealTo;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.MealsUtil;
-import ru.javawebinar.topjava.util.TimeUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,6 +24,7 @@ public class MealServlet extends HttpServlet {
     private static final Logger log = getLogger(MealServlet.class);
     private static final String INSERT_OR_EDIT = "/mealEdit.jsp";
     private static final String ALL_MEALS = "/meals.jsp";
+    private MealRepository repository=new MealRepository();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,7 +34,7 @@ public class MealServlet extends HttpServlet {
         String action = request.getParameter("action");
         if (action==null)
             action="start";
-        MealRepository repository = new MealRepository();
+      //  MealRepository repository = new MealRepository();
         // System.out.printf("action"+action.toString() );
 
         if (action.equalsIgnoreCase("edit")) {
@@ -82,26 +82,35 @@ public class MealServlet extends HttpServlet {
             e.printStackTrace();
         }
       //  meal.setEmail(request.getParameter("email"));
-        String userid = request.getParameter("mealId");
-        if (userid==null)
+        String mealId = request.getParameter("mealId");
+        if (mealId==null)
             System.out.println("Error ! user id  NULL!!!");
-        MealRepository repository = new MealRepository();
+    //    MealRepository repository = new MealRepository();
 
-        Meal meal = new Meal(Integer.parseInt(userid),dob, request.getParameter("description"),Integer.parseInt(request.getParameter("calories")));
+        Meal meal = new Meal(Integer.parseInt(mealId),dob, request.getParameter("description"),Integer.parseInt(request.getParameter("calories")));
 
-        if(userid == null || userid.isEmpty())
+        if(mealId == null || mealId.isEmpty())
         {
             repository.save(meal);
         }
         else
         {
            // meal.setUserid(Integer.parseInt(userid));
-            repository.update(meal);
+            repository.update(Integer.valueOf(mealId), meal);
         }
 
         RequestDispatcher view = request.getRequestDispatcher(INSERT_OR_EDIT);
-        request.setAttribute("users", repository.getAll());
-        view.forward(request, response);
+        //request.setAttribute("users", repository.getAll());
+
+        List<MealTo> meals = new ArrayList<>();
+        meals.addAll(MealsUtil.filteredByStreams( repository.getAll(), LocalTime.MIN, LocalTime.MAX, MealsUtil.returnCaloriesNorm()));
+        request.setAttribute("meals", meals);
+
+       //response.sendRedirect("meals");
+      response.sendRedirect("meals");
+      // view.forward(request, response);
+        //request.getRequestDispatcher(ALL_MEALS).forward(request, response);
+
     }
 
 }

@@ -22,10 +22,10 @@ public class MealRepository {
         //todo stream 17/02
     }
 
-    public Meal update(Meal meal) {
+    public Meal update(Integer mealId, Meal meal) {
         //todo it is save ? 18/02
         //System.out.println(counter.get());
-        return repository.put(counter.getAndIncrement(),meal);
+        return repository.put( mealId,meal);
     }
 
     public Meal save(Meal meal) {

@@ -24,8 +24,10 @@
     <%--type="datetime-local Этот тип всплывающего календаря--%>
     <input type="datetime-local" value="${meal.dateTime}" name="dateTime" required/><br/>
     Description :
-    <input type="text" name="Description"
+    <input type="text" name="description"
     value="<c:out value="${meal.description}" />"/> <br/>
+    <input type="text" name="calories"
+           value="<c:out value="${meal.calories}" />"/> <br/>
  <%--  // <input type="submit" value="Submit"/>--%>
     <button type="submit">Save</button>
     <button onclick="window.history.back()" type="button">Cancel</button>
