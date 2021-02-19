@@ -46,6 +46,13 @@ public class MealServlet extends HttpServlet {
             request.setAttribute("meal", meal);
             System.out.print("!!!!!!! " + action + "!!!!!!!!!!!" + mealId);
         }
+        else if(action.equalsIgnoreCase("del")) {
+
+            int mealId =Integer.valueOf( request.getParameter("mealId"));
+            repository.delete(mealId);
+            response.sendRedirect("meals");
+            return;
+        }
         else {
             forward = ALL_MEALS;
         }
