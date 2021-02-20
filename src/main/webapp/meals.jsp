@@ -40,7 +40,7 @@
 </c:forEach>--%>
 
 <h2>
-   <p><a href="UserController?action=insert">Add User</a></p>
+    <p><a href="meals?action=insert">Add User</a></p>
     END
 </h2>
 </body>

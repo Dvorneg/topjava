@@ -15,8 +15,10 @@ import java.io.IOException;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -34,42 +36,48 @@ public class MealServlet extends HttpServlet {
         String action = request.getParameter("action");
         if (action==null)
             action="start";
-      //  MealRepository repository = new MealRepository();
-        // System.out.printf("action"+action.toString() );
 
-        if (action.equalsIgnoreCase("edit")) {
+        if (action.equalsIgnoreCase("edit")  ) {
             log.debug("edit to meals");
             forward = INSERT_OR_EDIT;
             int mealId =Integer.valueOf( request.getParameter("mealId"));
             Meal meal = repository.getMealsById(mealId);
             log.debug("meal:"+meal);
             request.setAttribute("meal", meal);
-            System.out.print("!!!!!!! " + action + "!!!!!!!!!!!" + mealId);
+            //System.out.print("!!!!!!! " + action + "!!!!!!!!!!!" + mealId);
         }
         else if(action.equalsIgnoreCase("del")) {
-
             int mealId =Integer.valueOf( request.getParameter("mealId"));
             repository.delete(mealId);
             response.sendRedirect("meals");
             return;
         }
+        else if(action.equalsIgnoreCase("insert") ) {
+            log.debug("insert to meals");
+            forward = INSERT_OR_EDIT;
+            //request.setAttribute("meal", meal);
+
+
+            final Meal meal =  new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000);
+                 //   repository.getMealsById(  getId(request) );
+
+            log.debug("meal:"+meal);
+            request.setAttribute("meal", meal);
+            request.getRequestDispatcher(forward).forward(request, response);
+
+        }
         else {
             forward = ALL_MEALS;
+            System.out.println(action+" = > ELSE ^^^^^^^");
         }
 
 //        request.getRequestDispatcher("/users.jsp").forward(request, response);
         response.setContentType("text/html");
-
-        //List<MealTo> meals = MealsUtil.friendsAsArray(); //Заменяем ниже
         List<MealTo> meals = new ArrayList<>();
         meals.addAll(MealsUtil.filteredByStreams( repository.getAll(), LocalTime.MIN, LocalTime.MAX, MealsUtil.returnCaloriesNorm()));
         request.setAttribute("meals", meals);
-        // RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
-        // dispatcher.forward(request, response);
         log.debug("meals:"+meals);
         request.getRequestDispatcher(forward).forward(request, response);
-        //request.getRequestDispatcher("/meals.jsp").forward(request, response);
-        //response.sendRedirect("meals.jsp",response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -117,7 +125,10 @@ public class MealServlet extends HttpServlet {
       response.sendRedirect("meals");
       // view.forward(request, response);
         //request.getRequestDispatcher(ALL_MEALS).forward(request, response);
-
     }
 
+    private int getId(HttpServletRequest request) {
+        String paramId = Objects.requireNonNull(request.getParameter("mealId"));
+        return Integer.parseInt(paramId);
+    }
 }
