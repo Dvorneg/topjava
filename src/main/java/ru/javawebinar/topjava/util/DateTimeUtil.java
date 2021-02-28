@@ -10,11 +10,17 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class DateTimeUtil {
+    private DateTimeUtil() {
+    }
+
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     // DB doesn't support LocalDate.MIN/MAX
     private static final LocalDateTime MIN_DATE = LocalDateTime.of(1, 1, 1, 0, 0);
     private static final LocalDateTime MAX_DATE = LocalDateTime.of(3000, 1, 1, 0, 0);
+
+    private DateTimeUtil() {
+    }
 
     public static LocalDateTime atStartOfDayOrMin(LocalDate localDate) {
         return localDate != null ? localDate.atStartOfDay() : MIN_DATE;
