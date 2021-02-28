@@ -1,5 +1,6 @@
-Codacy Badge Build Status
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/353207d9f78e47d7968edb1e8b85ca2a)](https://www.codacy.com/gh/Dvorneg/topjava/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Dvorneg/topjava&amp;utm_campaign=Badge_Grade)
 
+[![Build Status](https://travis-ci.com/Dvorneg/topjava.svg?branch=master)](https://travis-ci.com/github/Dvorneg/topjava/builds/218480259)
 
 Java Enterprise Online Project 
 ===============================
