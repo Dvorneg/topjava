@@ -9,20 +9,23 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Set;
 
 @NamedQueries({
 /*        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id"),
         @NamedQuery(name = User.BY_EMAIL, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=?1"),
         @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT m FROM Meal m LEFT JOIN FETCH m.user.id ORDER BY m.dateTime, m.calories"),*/
-        @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT m FROM Meal m ORDER BY m.dateTime"),
+        @NamedQuery(name = Meal.GETBETWEN, query = "SELECT m FROM Meal m WHERE m.dateTime>?1"),
+        @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal m WHERE m.id=:id and m.user.id=:userId"),
+        @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT m FROM Meal m  WHERE m.user.id=:userId ORDER BY m.dateTime DESC"),
 })
 
 @Entity
-@Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = "user_id", name = "meals_unique_user_datetime_idx")})
+@Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id","date_time"}, name = "meals_unique_user_datetime_idx")})
 public class Meal extends AbstractBaseEntity {
 
     public static final String ALL_SORTED = "Meal.getAllSorted";
+    public static final String DELETE = "Meal.delete";
+    public static final String GETBETWEN = "Meal.getBetween";
 
     @Column(name = "DATE_TIME", nullable = false, columnDefinition = "timestamp default now()")
     @NotNull
@@ -30,11 +33,11 @@ public class Meal extends AbstractBaseEntity {
 
     @Column(name = "description", nullable = false, unique = false)
     @NotBlank
-    @Size(max = 150)
+    @Size(max = 120)
     private String description;
 
     @Column(name = "calories", nullable = false, unique = false, columnDefinition = "int default 500")
-    @Range(min = 10, max = 10000)
+    @Range(min = 10, max = 5000)
     private int calories;
 
 /*    @CollectionTable(name = "users", joinColumns = @JoinColumn(name = "id"),
