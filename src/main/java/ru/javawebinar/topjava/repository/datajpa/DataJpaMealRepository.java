@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.repository.datajpa;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
@@ -9,6 +10,8 @@ import java.util.List;
 
 @Repository
 public class DataJpaMealRepository implements MealRepository {
+
+    //private static final Sort SORT_DATE = Sort.by(Sort.Direction.DESC, "date_time");
 
     private final CrudMealRepository crudRepository;
 
@@ -41,7 +44,10 @@ public class DataJpaMealRepository implements MealRepository {
         return null;
     }
 
-    @Query(value = "SELECT * FROM PAYMENT_MASTER WHERE LAST_UPDATED >= :startDate AND LAST_UPDATED <= :endDate", nativeQuery = true)
-    List<PaymentMaster> getAllBetweenDates(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+/*    @Override
+    public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
+        return crudRepository.getBetweenHalfOpen(startDateTime,endDateTime,userId);
+    }*/
+
 
 }
