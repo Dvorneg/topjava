@@ -22,7 +22,7 @@ public class MealService {
 /* было   public MealService(MealRepository repository) {
         this.repository = repository;
     }*/
-    public MealService(@Qualifier("jdbcMealRepository") MealRepository repository) {
+    public MealService(MealRepository repository) {
         this.repository = repository;
     }
 
